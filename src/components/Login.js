@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
 class Login extends Component {
-  render() {
-    return <div>Login</div>;
+  render () {
+    return <div>Login</div>
   }
 }
 
-export default Login;
+export default Login
