@@ -3,8 +3,8 @@ import { removeToken } from "../services/tokenService";
 
 const Logout = props => {
   const logout = () => {
-    removeToken();
-    props.setUser(null);
+    // 1. Remove the user's token from local storage.
+    // 2. Set the user in state to be equal to null.
   };
   return <button onClick={logout}>Logout</button>;
 };

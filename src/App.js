@@ -1,71 +1,33 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from "react-router-dom";
 import axios from "axios";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Logout from "./components/Logout";
-import { getToken } from "./services/tokenService";
-import Dashboard from "./components/Dashboard";
-
 class App extends Component {
   state = {
     user: null
   };
 
   componentDidMount() {
-    this.getCurrentUser();
+    // When the app loads, try and get the current user
   }
 
   setUser = user => {
-    this.setState({ user });
+    // Set the current user into state.
   };
 
   getCurrentUser = () => {
-    const token = getToken();
-    if (token) {
-      axios
-        .get("/user/current", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        .then(res => {
-          if (res.status === 200) {
-            const user = res.data.payload;
-            this.setUser(user);
-          }
-        });
-    }
+    // 1. Try and retrieve the user's token
+    // 2. If they have a token, make a request to /user/current for their user details
+    // 3. Pass the token as an Authorization Header
+    // 4. If a successful response returns, store the user in state.
   };
   render() {
+    // 1. Add React-Router to control what view the user sees
+    // 2. If there is an active user in state, send them to the dashboard.
+    // 3. If there's no user, send them to the login screen.
+    // 4. If a logged in user tries to hit the login screen, redirect them to the dashboard.
     return (
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route
-              exact
-              path="/login"
-              render={props => {
-                return this.state.user ? <Redirect to="/" /> : <Login />;
-              }}
-            />
-            <Route
-              render={props => {
-                return this.state.user ? (
-                  <Dashboard user={this.state.user} />
-                ) : (
-                  <Redirect to="/login" />
-                );
-              }}
-            />
-          </Switch>
-        </div>
-      </Router>
+      <div className="App">
+        <h1>Authentication App</h1>
+      </div>
     );
   }
 }

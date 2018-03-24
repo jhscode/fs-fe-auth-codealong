@@ -13,37 +13,18 @@ class Dashboard extends React.Component {
     });
   };
   componentDidMount() {
-    const token = getToken();
-    axios
-      .get("/todo", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(res => {
-        const { payload } = res.data;
-        this.setState({ todos: payload });
-      });
+    // 1. When the dashboard loads, get the user's token
+    // 2. Send a GET request to /todo and pass the token to grab a list of ONLY this user's todos
+    // 3. If we get a successful response, store the todos in state.
   }
   handleSubmit = e => {
     e.preventDefault();
     const { todo } = this.state;
-    const token = getToken();
-    axios
-      .post(
-        "/todo",
-        {
-          description: todo
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
-      .then(res => {
-        console.log(res);
-      });
+
+    // 1. Get the user's token
+    // 2. Send a POST to /todo with
+    //  a - the body containing the TODO we wish to post
+    //  b - the Authorization Header Bearer <token>
   };
   render() {
     return (
