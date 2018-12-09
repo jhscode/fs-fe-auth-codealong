@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import axios from 'axios';
 
-class Login extends Component {
+class Signup extends Component {
   state = {
     email: "",
     password: ""
@@ -8,9 +9,17 @@ class Login extends Component {
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
-    console.log("submitted!");
+    // 1. Grab email and password from the state
+    const { email, password } = this.state;
+    // 2. POST them to our API
+    try {
+      const res = await axios.post('/auth/signup', { email, password });
+      this.props.setUser(res.data);
+    } catch(e) {
+      console.error(e);
+    }
   };
   render() {
     return (
@@ -43,4 +52,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Signup;
